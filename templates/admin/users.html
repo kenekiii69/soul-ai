@@ -1,0 +1,1397 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Soul AI — User Management</title>
+
+    <style>
+
+        /* =========================================================
+           RESET + BODY
+        ========================================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Inter, Arial, sans-serif;
+            background: #10151c;
+            color: #f4f7fb;
+            min-height: 100vh;
+        }
+
+
+        /* =========================================================
+           MASTER DASHBOARD LAYOUT
+        ========================================================= */
+
+        .admin-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+
+        /* =========================================================
+           SIDEBAR — DASHBOARD MASTER
+        ========================================================= */
+
+        .sidebar {
+            width: 250px;
+            background: #151c25;
+            border-right: 1px solid #27313d;
+            padding: 22px 15px;
+
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            padding: 5px 10px 28px;
+        }
+
+        .brand-icon {
+            width: 38px;
+            height: 38px;
+
+            border-radius: 11px;
+            background: #1683ff;
+
+            display: grid;
+            place-items: center;
+
+            font-size: 20px;
+        }
+
+        .brand h2 {
+            font-size: 18px;
+        }
+
+        .brand span {
+            color: #7e8b9a;
+            font-size: 11px;
+        }
+
+        .nav-title {
+            color: #657282;
+            font-size: 11px;
+
+            text-transform: uppercase;
+            letter-spacing: 1px;
+
+            padding: 0 10px 10px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            padding: 12px 13px;
+            margin-bottom: 5px;
+
+            border-radius: 10px;
+
+            color: #aeb9c6;
+            cursor: pointer;
+
+            transition: .2s;
+
+            text-decoration: none;
+        }
+
+        .nav-item:hover {
+            background: #202a36;
+            color: #fff;
+        }
+
+        .nav-item.active {
+            background: #1683ff;
+            color: white;
+        }
+
+        .nav-icon {
+            width: 20px;
+            text-align: center;
+        }
+
+        .sidebar-bottom {
+            margin-top: auto;
+        }
+
+
+        /* =========================================================
+           MAIN
+        ========================================================= */
+
+        .main {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .topbar {
+            height: 72px;
+
+            border-bottom: 1px solid #27313d;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 30px;
+
+            background: #121820;
+        }
+
+        .page-title h1 {
+            font-size: 21px;
+        }
+
+        .page-title p {
+            color: #7e8b9a;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        .admin-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .avatar {
+            width: 38px;
+            height: 38px;
+
+            border-radius: 50%;
+            background: #1683ff;
+
+            display: grid;
+            place-items: center;
+
+            font-weight: bold;
+        }
+
+        .profile-info strong {
+            display: block;
+            font-size: 13px;
+        }
+
+        .profile-info span {
+            color: #1683ff;
+            font-size: 11px;
+        }
+
+
+        /* =========================================================
+           CONTENT
+        ========================================================= */
+
+        .content {
+            padding: 30px;
+        }
+
+
+        /* =========================================================
+           PAGE HEADING
+        ========================================================= */
+
+        .heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+
+            margin-bottom: 24px;
+        }
+
+        .heading h2 {
+            font-size: 26px;
+            margin-bottom: 6px;
+        }
+
+        .heading p {
+            color: #8491a0;
+            font-size: 13px;
+        }
+
+        .user-count {
+            color: #1683ff;
+            font-size: 13px;
+        }
+
+
+        /* =========================================================
+           SEARCH TOOLBAR
+        ========================================================= */
+
+        .toolbar {
+            background: #171f29;
+
+            border: 1px solid #27313d;
+            border-radius: 14px;
+
+            padding: 16px;
+            margin-bottom: 18px;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-input {
+            flex: 1;
+
+            background: #10151c;
+
+            border: 1px solid #303b48;
+            border-radius: 10px;
+
+            padding: 12px 14px;
+
+            color: white;
+            outline: none;
+
+            font-size: 13px;
+        }
+
+        .search-input:focus {
+            border-color: #1683ff;
+        }
+
+        .search-input::placeholder {
+            color: #687687;
+        }
+
+        .search-btn {
+            border: none;
+
+            background: #1683ff;
+            color: white;
+
+            padding: 0 22px;
+
+            border-radius: 10px;
+
+            cursor: pointer;
+
+            font-weight: 600;
+        }
+
+        .search-btn:hover {
+            background: #0f75e6;
+        }
+
+        .clear-btn {
+            display: flex;
+            align-items: center;
+
+            padding: 0 16px;
+
+            border: 1px solid #303b48;
+            border-radius: 10px;
+
+            color: #aeb9c6;
+
+            text-decoration: none;
+
+            font-size: 12px;
+        }
+
+        .clear-btn:hover {
+            background: #202a35;
+            color: white;
+        }
+
+
+        /* =========================================================
+           TABLE
+        ========================================================= */
+
+        .table-card {
+            background: #171f29;
+
+            border: 1px solid #27313d;
+            border-radius: 14px;
+
+            overflow: hidden;
+        }
+
+        .table-wrap {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 850px;
+        }
+
+        th {
+            text-align: left;
+
+            padding: 15px 18px;
+
+            background: #141b23;
+
+            color: #6f7c8c;
+
+            font-size: 10px;
+
+            text-transform: uppercase;
+            letter-spacing: .7px;
+        }
+
+        td {
+            padding: 15px 18px;
+
+            border-top: 1px solid #242d38;
+
+            font-size: 12px;
+
+            color: #cbd4df;
+        }
+
+        tr:hover td {
+            background: #1b242f;
+        }
+
+
+        /* =========================================================
+           USER
+        ========================================================= */
+
+        .user-cell {
+            display: flex;
+            align-items: center;
+
+            gap: 10px;
+        }
+
+        .user-avatar {
+            width: 34px;
+            height: 34px;
+
+            border-radius: 50%;
+
+            background: #202a35;
+
+            display: grid;
+            place-items: center;
+
+            font-weight: bold;
+
+            color: #1683ff;
+
+            flex-shrink: 0;
+        }
+
+        .user-name strong {
+            display: block;
+
+            color: #f4f7fb;
+
+            font-size: 12px;
+        }
+
+        .user-name span {
+            color: #687687;
+            font-size: 10px;
+        }
+
+
+        /* =========================================================
+           BADGES
+        ========================================================= */
+
+        .badge {
+            display: inline-flex;
+
+            padding: 5px 9px;
+
+            border-radius: 20px;
+
+            font-size: 10px;
+
+            font-weight: 600;
+        }
+
+        .badge-admin {
+            background: #26354a;
+            color: #65a9ff;
+        }
+
+        .badge-user {
+            background: #242d35;
+            color: #aeb9c6;
+        }
+
+        .badge-active {
+            background: #173529;
+            color: #4ed783;
+        }
+
+        .badge-suspended {
+            background: #3a301c;
+            color: #e7b94f;
+        }
+
+        .badge-deleted {
+            background: #3b2226;
+            color: #e56d78;
+        }
+
+
+        /* =========================================================
+           ACTIONS
+        ========================================================= */
+
+        .actions {
+            display: flex;
+            gap: 7px;
+        }
+
+        .action-btn {
+            border: 1px solid #303b48;
+
+            background: #202a35;
+
+            color: #cbd4df;
+
+            padding: 7px 9px;
+
+            border-radius: 7px;
+
+            cursor: pointer;
+
+            font-size: 10px;
+        }
+
+        .action-btn:hover {
+            border-color: #1683ff;
+            color: white;
+        }
+
+        .action-btn.danger:hover {
+            border-color: #e56d78;
+            color: #e56d78;
+        }
+
+        .action-btn:disabled {
+            opacity: .35;
+            cursor: not-allowed;
+        }
+
+
+        /* =========================================================
+           PAGINATION
+        ========================================================= */
+
+        .pagination {
+            display: flex;
+
+            justify-content: space-between;
+            align-items: center;
+
+            padding: 16px 18px;
+
+            border-top: 1px solid #242d38;
+        }
+
+        .page-info {
+            color: #687687;
+            font-size: 11px;
+        }
+
+        .page-buttons {
+            display: flex;
+            gap: 6px;
+        }
+
+        .page-btn {
+            text-decoration: none;
+
+            color: #aeb9c6;
+
+            border: 1px solid #303b48;
+
+            padding: 7px 10px;
+
+            border-radius: 7px;
+
+            font-size: 11px;
+        }
+
+        .page-btn:hover,
+        .page-btn.current {
+            background: #1683ff;
+
+            border-color: #1683ff;
+
+            color: white;
+        }
+
+
+        /* =========================================================
+           EMPTY
+        ========================================================= */
+
+        .empty {
+            text-align: center;
+
+            padding: 60px 20px;
+
+            color: #687687;
+        }
+
+
+        /* =========================================================
+           MOBILE
+        ========================================================= */
+
+        @media (max-width: 950px) {
+
+            .sidebar {
+                width: 210px;
+            }
+
+        }
+
+        @media (max-width: 650px) {
+
+            .admin-layout {
+                display: block;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .topbar {
+                padding: 0 17px;
+            }
+
+            .content {
+                padding: 20px 15px;
+            }
+
+            .profile-info {
+                display: none;
+            }
+
+            .heading {
+                display: block;
+            }
+
+            .user-count {
+                display: block;
+                margin-top: 8px;
+            }
+
+            .search-form {
+                flex-wrap: wrap;
+            }
+
+            .search-input {
+                width: 100%;
+                flex: none;
+                height: 42px;
+            }
+
+            .search-btn,
+            .clear-btn {
+                height: 40px;
+            }
+
+            .pagination {
+                flex-direction: column;
+
+                gap: 12px;
+
+                align-items: flex-start;
+            }
+
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+<div class="admin-layout">
+
+
+    <!-- =========================================================
+         SIDEBAR
+    ========================================================== -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                💫
+            </div>
+
+            <div>
+
+                <h2>Soul AI</h2>
+
+                <span>ADMIN CENTER</span>
+
+            </div>
+
+        </div>
+
+
+        <div class="nav-title">
+            Control
+        </div>
+
+
+        <a class="nav-item" href="/admin/">
+
+            <div class="nav-icon">
+                🏠
+            </div>
+
+            Dashboard
+
+        </a>
+
+
+        <a class="nav-item active" href="/admin/users">
+
+            <div class="nav-icon">
+                👥
+            </div>
+
+            Users
+
+        </a>
+
+
+        <a class="nav-item" href="/admin/providers">
+
+            <div class="nav-icon">
+                🤖
+            </div>
+
+            AI Providers
+
+        </a>
+
+
+        <a class="nav-item" href="/admin/models">
+
+            <div class="nav-icon">
+                🧠
+            </div>
+
+            AI Models
+
+        </a>
+
+
+        <a class="nav-item" href="/admin/api-keys">
+
+            <div class="nav-icon">
+                🔑
+            </div>
+
+            API Keys
+
+        </a>
+
+
+        <a class="nav-item" href="/admin/routing">
+
+            <div class="nav-icon">
+                🚦
+            </div>
+
+            Routing
+
+        </a>
+
+
+        <div
+            class="nav-title"
+            style="margin-top:20px;"
+        >
+            Monitor
+        </div>
+
+
+        <a class="nav-item" href="/admin/health">
+
+            <div class="nav-icon">
+                ❤️
+            </div>
+
+            Health
+
+        </a>
+
+
+        <a class="nav-item" href="/admin/analytics">
+
+            <div class="nav-icon">
+                📊
+            </div>
+
+            Analytics
+
+        </a>
+
+
+        <a class="nav-item" href="/admin/logs">
+
+            <div class="nav-icon">
+                📜
+            </div>
+
+            Activity Logs
+
+        </a>
+
+
+        <div class="sidebar-bottom">
+
+            <a
+                class="nav-item"
+                href="/admin/settings"
+            >
+
+                <div class="nav-icon">
+                    ⚙️
+                </div>
+
+                Settings
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =========================================================
+         MAIN
+    ========================================================== -->
+
+    <main class="main">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+            <div class="page-title">
+
+                <h1>
+                    User Management
+                </h1>
+
+                <p>
+                    Manage Soul AI user accounts
+                </p>
+
+            </div>
+
+
+            <div class="admin-profile">
+
+                <div class="avatar">
+                    K
+                </div>
+
+                <div class="profile-info">
+
+                    <strong>
+                        Ken
+                    </strong>
+
+                    <span>
+                        ADMIN
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- CONTENT -->
+
+        <section class="content">
+
+
+            <!-- PAGE HEADING -->
+
+            <div class="heading">
+
+                <div>
+
+                    <h2>
+                        Users
+                    </h2>
+
+                    <p>
+                        View and manage registered accounts.
+                    </p>
+
+                </div>
+
+
+                <div class="user-count">
+                    {{ total_users }} total users
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 SEARCH
+            ================================================= -->
+
+            <div class="toolbar">
+
+                <form
+                    class="search-form"
+                    method="GET"
+                    action="/admin/users"
+                >
+
+                    <input
+                        class="search-input"
+                        type="text"
+                        name="search"
+                        value="{{ search }}"
+                        placeholder="Search username, name or email..."
+                    >
+
+
+                    <button
+                        class="search-btn"
+                        type="submit"
+                    >
+                        🔍 Search
+                    </button>
+
+
+                    {% if search %}
+
+                    <a
+                        class="clear-btn"
+                        href="/admin/users"
+                    >
+                        Clear
+                    </a>
+
+                    {% endif %}
+
+                </form>
+
+            </div>
+
+
+            <!-- =================================================
+                 USERS TABLE
+            ================================================= -->
+
+            <div class="table-card">
+
+                <div class="table-wrap">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    User
+                                </th>
+
+                                <th>
+                                    Email
+                                </th>
+
+                                <th>
+                                    Role
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                                <th>
+                                    Last Login
+                                </th>
+
+                                <th>
+                                    Actions
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                        {% if users %}
+
+                            {% for user in users %}
+
+                            <tr>
+
+
+                                <!-- USER -->
+
+                                <td>
+
+                                    <div class="user-cell">
+
+                                        <div class="user-avatar">
+
+                                            {{ (user.full_name or user.username)[0]|upper }}
+
+                                        </div>
+
+
+                                        <div class="user-name">
+
+                                            <strong>
+                                                {{ user.full_name or user.username }}
+                                            </strong>
+
+                                            <span>
+                                                @{{ user.username }}
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+
+                                <!-- EMAIL -->
+
+                                <td>
+                                    {{ user.email }}
+                                </td>
+
+
+                                <!-- ROLE -->
+
+                                <td>
+
+                                    {% if user.role == "admin" %}
+
+                                        <span class="badge badge-admin">
+                                            ADMIN
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="badge badge-user">
+                                            USER
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+
+                                <!-- STATUS -->
+
+                                <td>
+
+                                    {% if user.account_status == "active" %}
+
+                                        <span class="badge badge-active">
+                                            ● ACTIVE
+                                        </span>
+
+                                    {% elif user.account_status == "suspended" %}
+
+                                        <span class="badge badge-suspended">
+                                            ● SUSPENDED
+                                        </span>
+
+                                    {% elif user.account_status == "deleted" %}
+
+                                        <span class="badge badge-deleted">
+                                            ● DELETED
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="badge badge-deleted">
+                                            {{ user.account_status|upper }}
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+
+                                <!-- LAST LOGIN -->
+
+                                <td>
+
+                                    {% if user.last_login %}
+
+                                        {{ user.last_login }}
+
+                                    {% else %}
+
+                                        <span style="color:#687687;">
+                                            Never
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+
+                                <!-- ACTIONS -->
+
+                                <td>
+
+                                    <div class="actions">
+
+
+                                        {% if user.id == admin_id or user.role == "admin" %}
+
+                                            <button
+                                                class="action-btn"
+                                                disabled
+                                            >
+                                                Protected
+                                            </button>
+
+
+                                        {% elif user.account_status == "active" %}
+
+                                            <button
+                                                class="action-btn"
+                                                onclick="changeStatus(
+                                                    {{ user.id }},
+                                                    'suspended'
+                                                )"
+                                            >
+                                                Suspend
+                                            </button>
+
+
+                                            <button
+                                                class="action-btn danger"
+                                                onclick="deleteUser(
+                                                    {{ user.id }}
+                                                )"
+                                            >
+                                                Delete
+                                            </button>
+
+
+                                        {% elif user.account_status == "suspended" %}
+
+                                            <button
+                                                class="action-btn"
+                                                onclick="changeStatus(
+                                                    {{ user.id }},
+                                                    'active'
+                                                )"
+                                            >
+                                                Activate
+                                            </button>
+
+
+                                            <button
+                                                class="action-btn danger"
+                                                onclick="deleteUser(
+                                                    {{ user.id }}
+                                                )"
+                                            >
+                                                Delete
+                                            </button>
+
+
+                                        {% else %}
+
+                                            <button
+                                                class="action-btn"
+                                                disabled
+                                            >
+                                                Deleted
+                                            </button>
+
+                                        {% endif %}
+
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                            {% endfor %}
+
+
+                        {% else %}
+
+                            <tr>
+
+                                <td colspan="6">
+
+                                    <div class="empty">
+
+                                        <div style="font-size:32px;">
+                                            👥
+                                        </div>
+
+                                        <br>
+
+                                        No users found.
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                        {% endif %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <!-- =================================================
+                     PAGINATION
+                ================================================= -->
+
+                <div class="pagination">
+
+
+                    <div class="page-info">
+
+                        Page {{ page }} of {{ total_pages }}
+
+                    </div>
+
+
+                    <div class="page-buttons">
+
+
+                        {% if page > 1 %}
+
+                            <a
+                                class="page-btn"
+                                href="/admin/users?page={{ page - 1 }}{% if search %}&search={{ search|urlencode }}{% endif %}"
+                            >
+                                ← Previous
+                            </a>
+
+                        {% endif %}
+
+
+                        {% for p in range(1, total_pages + 1) %}
+
+                            {% if p <= 5 %}
+
+                                <a
+                                    class="page-btn {% if p == page %}current{% endif %}"
+                                    href="/admin/users?page={{ p }}{% if search %}&search={{ search|urlencode }}{% endif %}"
+                                >
+                                    {{ p }}
+                                </a>
+
+                            {% endif %}
+
+                        {% endfor %}
+
+
+                        {% if page < total_pages %}
+
+                            <a
+                                class="page-btn"
+                                href="/admin/users?page={{ page + 1 }}{% if search %}&search={{ search|urlencode }}{% endif %}"
+                            >
+                                Next →
+                            </a>
+
+                        {% endif %}
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- =============================================================
+     USER MANAGEMENT JAVASCRIPT
+============================================================= -->
+
+<script>
+
+
+    // =========================================================
+    // CHANGE USER STATUS
+    // =========================================================
+
+    async function changeStatus(userId, status) {
+
+        const action =
+            status === "active"
+                ? "activate"
+                : "suspend";
+
+
+        const confirmed = confirm(
+            `Are you sure you want to ${action} this user?`
+        );
+
+
+        if (!confirmed) {
+            return;
+        }
+
+
+        try {
+
+            const response = await fetch(
+                `/admin/users/${userId}/status`,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        status: status
+                    })
+                }
+            );
+
+
+            const data = await response.json();
+
+
+            if (!data.success) {
+
+                alert(
+                    data.message ||
+                    "Unable to update user."
+                );
+
+                return;
+            }
+
+
+            location.reload();
+
+        }
+        catch (error) {
+
+            console.error(error);
+
+            alert(
+                "Server error. Please try again."
+            );
+
+        }
+
+    }
+
+
+    // =========================================================
+    // DELETE USER
+    // =========================================================
+
+    async function deleteUser(userId) {
+
+        const confirmed = confirm(
+            "Delete this user account?\n\n" +
+            "The account will be marked as deleted."
+        );
+
+
+        if (!confirmed) {
+            return;
+        }
+
+
+        try {
+
+            const response = await fetch(
+                `/admin/users/${userId}/delete`,
+                {
+                    method: "POST"
+                }
+            );
+
+
+            const data = await response.json();
+
+
+            if (!data.success) {
+
+                alert(
+                    data.message ||
+                    "Unable to delete user."
+                );
+
+                return;
+            }
+
+
+            location.reload();
+
+        }
+        catch (error) {
+
+            console.error(error);
+
+            alert(
+                "Server error. Please try again."
+            );
+
+        }
+
+    }
+
+</script>
+
+
+</body>
+</html>

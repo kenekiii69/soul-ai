@@ -1,0 +1,115 @@
+/* ==========================================================
+   Soul AI - Login
+========================================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #1e1e1e;
+    color: #ffffff;
+
+    font-family: Arial, sans-serif;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 400px;
+
+    padding: 35px;
+
+    background: #2a2a2a;
+
+    border-radius: 16px;
+
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.35);
+
+    text-align: center;
+}
+
+.login-card h1 {
+    margin-bottom: 8px;
+}
+
+.login-card > p {
+    color: #bdbdbd;
+    margin-bottom: 25px;
+}
+
+#loginForm {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+#loginForm input {
+    width: 100%;
+
+    padding: 13px 15px;
+
+    border: 1px solid #444;
+    border-radius: 8px;
+
+    outline: none;
+
+    background: #1e1e1e;
+    color: #ffffff;
+
+    font-size: 15px;
+}
+
+#loginForm input:focus {
+    border-color: #0b84ff;
+}
+
+#loginForm button,
+.register-btn {
+    width: 100%;
+
+    padding: 13px;
+
+    border: none;
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-size: 15px;
+}
+
+#loginForm button {
+    background: #0b84ff;
+    color: #ffffff;
+}
+
+#loginForm button:hover {
+    background: #0a73dc;
+}
+
+.divider {
+    margin: 22px 0;
+
+    color: #888;
+}
+
+.register-btn {
+    background: #333333;
+    color: #ffffff;
+}
+
+.register-btn:hover {
+    background: #444444;
+}
+
+#login-message {
+    min-height: 22px;
+    margin-top: 15px;
+    color: #ffffff;
+}

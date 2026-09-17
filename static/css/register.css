@@ -1,0 +1,314 @@
+/* ==========================================================
+   Soul AI
+   Register Page
+   Professional Login-Matched UI
+========================================================== */
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    min-height: 100vh;
+
+    background: #1e1e1e;
+    color: #ffffff;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* ==========================================================
+   REGISTER CARD
+========================================================== */
+
+.login-card {
+
+    width: 400px;
+    max-width: calc(100% - 32px);
+
+    background: #2a2a2a;
+
+    padding: 42px 36px;
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.35);
+}
+
+
+/* ==========================================================
+   TITLE
+========================================================== */
+
+.login-card h1 {
+
+    text-align: center;
+
+    font-size: 32px;
+    font-weight: 700;
+
+    color: #ffffff;
+
+    margin-bottom: 6px;
+}
+
+
+/* ==========================================================
+   SUBTITLE
+========================================================== */
+
+.login-card > p {
+
+    text-align: center;
+
+    color: #bdbdbd;
+
+    font-size: 16px;
+
+    margin-bottom: 28px;
+}
+
+
+/* ==========================================================
+   FORM
+========================================================== */
+
+#registerForm {
+
+    width: 100%;
+}
+
+
+/* ==========================================================
+   INPUTS
+========================================================== */
+
+#registerForm input {
+
+    width: 100%;
+    height: 46px;
+
+    display: block;
+
+    padding: 0 15px;
+
+    margin-bottom: 14px;
+
+    background: #1e1e1e;
+
+    border: 1px solid #4a4a4a;
+
+    border-radius: 7px;
+
+    outline: none;
+
+    color: #ffffff;
+
+    font-size: 15px;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+
+/* Placeholder */
+
+#registerForm input::placeholder {
+    color: #888888;
+}
+
+
+/* Focus */
+
+#registerForm input:focus {
+
+    border-color: #0b84ff;
+
+    box-shadow:
+        0 0 0 2px rgba(11, 132, 255, 0.12);
+}
+
+
+/* ==========================================================
+   CREATE ACCOUNT BUTTON
+========================================================== */
+
+#registerForm button[type="submit"] {
+
+    width: 100%;
+    height: 46px;
+
+    margin-top: 4px;
+
+    border: none;
+    border-radius: 7px;
+
+    background: #0b84ff;
+
+    color: #ffffff;
+
+    font-size: 15px;
+    font-weight: 500;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        transform 0.1s ease;
+}
+
+
+#registerForm button[type="submit"]:hover {
+
+    background: #0a73dc;
+}
+
+
+#registerForm button[type="submit"]:active {
+
+    transform: scale(0.98);
+}
+
+
+/* ==========================================================
+   OR DIVIDER
+========================================================== */
+
+.divider {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    margin: 25px 0;
+
+    color: #999999;
+
+    font-size: 14px;
+}
+
+
+/* Lines */
+
+.divider::before,
+.divider::after {
+
+    content: "";
+
+    flex: 1;
+
+    height: 1px;
+
+    background: #454545;
+}
+
+
+/* ==========================================================
+   LOGIN REDIRECT
+========================================================== */
+
+.login-redirect {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 4px;
+
+    color: #999999;
+
+    font-size: 14px;
+}
+
+
+/* ==========================================================
+   LOGIN BUTTON / LINK
+========================================================== */
+
+.login-link {
+
+    padding: 0;
+
+    border: none;
+
+    background: transparent;
+
+    color: #0b84ff;
+
+    font-size: 14px;
+
+    cursor: pointer;
+}
+
+
+.login-link:hover {
+
+    text-decoration: underline;
+}
+
+
+/* ==========================================================
+   REGISTER MESSAGE
+========================================================== */
+
+#register-message {
+
+    text-align: center;
+
+    font-size: 14px;
+
+    margin-top: 18px;
+
+    min-height: 18px;
+
+    color: #ff6b6b;
+}
+
+
+/* ==========================================================
+   MOBILE RESPONSIVE
+========================================================== */
+
+@media (max-width: 480px) {
+
+    body {
+        padding: 16px;
+    }
+
+    .login-card {
+
+        width: 100%;
+
+        padding: 34px 24px;
+
+        border-radius: 12px;
+    }
+
+    .login-card h1 {
+
+        font-size: 29px;
+    }
+
+}

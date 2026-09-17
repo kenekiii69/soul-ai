@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Soul AI 💫</title>
+
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+    <!-- ===========================
+         Sidebar
+    ============================ -->
+
+    <div class="sidebar" id="sidebar">
+
+        <div class="sidebar-header">
+
+            <button id="toggle-btn">☰</button>
+
+            <h2>Soul AI 💫</h2>
+
+        </div>
+       <div class="user-panel" id="user-panel">
+    <div class="user-avatar">👤</div>
+
+    <div class="user-info">
+        <h3 id="username">User</h3>
+        <p id="user-email"></p>
+    </div>
+
+    <button id="login-btn" class="login-btn">
+        Logout
+    </button>
+</div>
+
+        <button class="new-chat" onclick="clearChat()">
+
+            ➕ New Chat
+
+        </button>
+        
+        <input
+
+            id="history-search"
+
+            placeholder="🔍 Search chats..."
+
+            class="history-search"
+
+        >
+
+        <div class="history" id="history">
+
+        <div class="history-empty">
+
+        No conversations yet
+
+        </div>
+
+        </div>
+
+        <button
+        id="theme-btn"
+        class="theme-btn">
+
+    🌙 Theme
+
+</button>
+    </div>
+<!-- ===========================
+     Main
+=========================== -->
+
+<div class="main">
+
+    <!-- Header -->
+
+    <header class="top-bar"></header>
+
+    <!-- ===========================
+         Chat Area
+    ============================ -->
+
+    <div id="chat">
+
+        <!-- Welcome Screen -->
+
+        <div class="welcome-screen" id="welcome">
+
+            <div class="welcome-icon">
+
+                ✨
+
+            </div>
+
+            <h2>
+
+                How can I help you today?
+
+            </h2>
+
+            <p id="welcome-subtitle">
+
+                 Ask me anything. I'm here to help!
+
+            </p>
+        </div>
+
+    </div>
+
+    <!-- ===========================
+         Input Area
+    ============================ -->
+
+    <div class="input-area" id="input-area">
+    <textarea
+        id="msg"
+        placeholder="Ask anything..."
+        rows="1"
+        autocomplete="off"
+        spellcheck="false"
+        oninput="autoResize(this)"
+        onkeydown="handleEnter(event)"
+    ></textarea>
+    
+        <button
+            class="send-btn"
+            class="send-btn"
+            onclick="sendMessage()"
+            title="Send">
+
+            ➤
+
+        </button>
+
+    </div>
+
+</div>
+<div
+    id="toast"
+    class="toast">
+
+</div>
+
+<!-- Logout Modal -->
+<div id="logout-modal" class="logout-modal">
+    <div class="logout-modal-box">
+        <h3>Logout?</h3>
+        <p>Are you sure you want to logout?</p>
+
+        <div class="logout-actions">
+            <button id="cancel-logout">Cancel</button>
+            <button id="confirm-logout">Logout</button>
+        </div>
+    </div>
+</div>
+
+    <!-- ===========================
+         Libraries
+    ============================ -->
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <!-- ===========================
+         JS Files
+    ============================ -->
+
+    <script src="{{ url_for('static', filename='js/sidebar.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='js/theme.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='js/auth.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='js/settings.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+
+</html>

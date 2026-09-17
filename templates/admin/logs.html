@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Activity Logs | Soul AI</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Inter, Arial, sans-serif;
+            background: #10151c;
+            color: #f4f7fb;
+            min-height: 100vh;
+        }
+
+        /* =========================
+           LAYOUT
+        ========================= */
+
+        .admin-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* =========================
+           SIDEBAR
+        ========================= */
+
+        .sidebar {
+            width: 250px;
+            background: #151c25;
+            border-right: 1px solid #27313d;
+            padding: 22px 15px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 5px 10px 28px;
+        }
+
+        .brand-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 11px;
+            background: #1683ff;
+            display: grid;
+            place-items: center;
+            font-size: 20px;
+        }
+
+        .brand h2 {
+            font-size: 18px;
+        }
+
+        .brand span {
+            color: #7e8b9a;
+            font-size: 11px;
+        }
+
+        .nav-title {
+            color: #657282;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            padding: 0 10px 10px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 13px;
+            margin-bottom: 5px;
+            border-radius: 10px;
+            color: #aeb9c6;
+            cursor: pointer;
+            transition: .2s;
+            text-decoration: none;
+        }
+
+        .nav-item:hover {
+            background: #202a36;
+            color: #fff;
+        }
+
+        .nav-item.active {
+            background: #1683ff;
+            color: white;
+        }
+
+        .nav-icon {
+            width: 20px;
+            text-align: center;
+        }
+
+        .sidebar-bottom {
+            margin-top: auto;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .main {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .topbar {
+            height: 72px;
+            border-bottom: 1px solid #27313d;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            background: #121820;
+        }
+
+        .page-title h1 {
+            font-size: 21px;
+        }
+
+        .page-title p {
+            color: #7e8b9a;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        .admin-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #1683ff;
+            display: grid;
+            place-items: center;
+            font-weight: bold;
+        }
+
+        .profile-info strong {
+            display: block;
+            font-size: 13px;
+        }
+
+        .profile-info span {
+            color: #1683ff;
+            font-size: 11px;
+        }
+
+        /* =========================
+           CONTENT
+        ========================= */
+
+        .content {
+            padding: 30px;
+        }
+
+        /* =========================
+           STATS
+        ========================= */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 22px;
+        }
+
+        .card {
+            background: #171f29;
+            border: 1px solid #27313d;
+            border-radius: 14px;
+            padding: 20px;
+        }
+
+        .stat-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::after {
+            content: "";
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #1683ff;
+            opacity: .07;
+            right: -25px;
+            top: -25px;
+        }
+
+        .stat-title {
+            color: #8491a0;
+            font-size: 12px;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            margin-top: 9px;
+        }
+
+        .stat-info {
+            margin-top: 8px;
+            font-size: 11px;
+            color: #49d17d;
+        }
+
+        /* =========================
+           FILTER
+        ========================= */
+
+        .filter-card {
+            margin-bottom: 18px;
+        }
+
+        .section-title {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+
+        .filters {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr auto;
+            gap: 10px;
+            align-items: end;
+        }
+
+        .field label {
+            display: block;
+            font-size: 10px;
+            color: #8491a0;
+            margin-bottom: 7px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            background: #111820;
+            border: 1px solid #293441;
+            color: #fff;
+            border-radius: 9px;
+            padding: 11px 12px;
+            outline: none;
+            font-family: inherit;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #1683ff;
+        }
+
+        .btn {
+            border: none;
+            border-radius: 9px;
+            padding: 11px 18px;
+            background: #1683ff;
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+            font-family: inherit;
+        }
+
+        .btn:hover {
+            background: #0878ed;
+        }
+
+        /* =========================
+           TABLE
+        ========================= */
+
+        .table-wrap {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            color: #687687;
+            font-size: 10px;
+            font-weight: 600;
+            padding: 12px 8px;
+            border-bottom: 1px solid #27313d;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 14px 8px;
+            border-bottom: 1px solid #242d38;
+            font-size: 12px;
+            color: #dce4ed;
+            vertical-align: top;
+        }
+
+        tr:hover td {
+            background: #1b242f;
+        }
+
+        .muted {
+            color: #687687;
+        }
+
+        .description {
+            max-width: 360px;
+            line-height: 1.5;
+            color: #8491a0;
+        }
+
+        /* =========================
+           SEVERITY
+        ========================= */
+
+        .badge {
+            display: inline-block;
+            padding: 5px 9px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .badge.info {
+            background: rgba(22, 131, 255, .15);
+            color: #4da3ff;
+        }
+
+        .badge.warning {
+            background: rgba(245, 166, 35, .15);
+            color: #f5b342;
+        }
+
+        .badge.error {
+            background: rgba(255, 82, 82, .15);
+            color: #ff6b6b;
+        }
+
+        .badge.critical {
+            background: rgba(220, 53, 69, .2);
+            color: #ff4d5d;
+        }
+
+        /* =========================
+           EMPTY
+        ========================= */
+
+        .empty {
+            text-align: center;
+            padding: 55px 20px;
+            color: #687687;
+        }
+
+        .empty-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        /* =========================
+           PAGINATION
+        ========================= */
+
+        .pagination {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 18px;
+            color: #687687;
+            font-size: 12px;
+        }
+
+        .pagination a {
+            color: #dce4ed;
+            text-decoration: none;
+            background: #202a36;
+            padding: 8px 13px;
+            border-radius: 8px;
+            margin-left: 5px;
+            transition: .2s;
+        }
+
+        .pagination a:hover {
+            background: #1683ff;
+            color: #fff;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 950px) {
+            .sidebar {
+                width: 210px;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .filters {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 650px) {
+            .admin-layout {
+                display: block;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .topbar {
+                padding: 0 17px;
+            }
+
+            .content {
+                padding: 20px 15px;
+            }
+
+            .profile-info {
+                display: none;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .filters {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                💫
+            </div>
+
+            <div>
+                <h2>Soul AI</h2>
+                <span>ADMIN CENTER</span>
+            </div>
+
+        </div>
+
+        <div class="nav-title">
+            Control
+        </div>
+
+        <a class="nav-item" href="/admin/">
+            <div class="nav-icon">🏠</div>
+            Dashboard
+        </a>
+
+        <a class="nav-item" href="/admin/users">
+            <div class="nav-icon">👥</div>
+            Users
+        </a>
+
+        <a class="nav-item" href="/admin/providers">
+            <div class="nav-icon">🤖</div>
+            AI Providers
+        </a>
+
+        <a class="nav-item" href="/admin/models">
+            <div class="nav-icon">🧠</div>
+            AI Models
+        </a>
+
+        <a class="nav-item" href="/admin/api-keys">
+            <div class="nav-icon">🔑</div>
+            API Keys
+        </a>
+
+        <a class="nav-item" href="/admin/routing">
+            <div class="nav-icon">🚦</div>
+            Routing
+        </a>
+
+        <div class="nav-title" style="margin-top:20px;">
+            Monitor
+        </div>
+
+        <a class="nav-item" href="/admin/health">
+            <div class="nav-icon">❤️</div>
+            Health
+        </a>
+
+        <a class="nav-item" href="/admin/analytics">
+            <div class="nav-icon">📊</div>
+            Analytics
+        </a>
+
+        <a class="nav-item active" href="/admin/logs">
+            <div class="nav-icon">📜</div>
+            Activity Logs
+        </a>
+
+        <div class="sidebar-bottom">
+
+            <a class="nav-item" href="/admin/settings">
+                <div class="nav-icon">⚙️</div>
+                Settings
+            </a>
+
+        </div>
+
+    </aside>
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main">
+
+        <header class="topbar">
+
+            <div class="page-title">
+
+                <h1>Activity Logs</h1>
+
+                <p>
+                    Monitor system activity, user actions and important events.
+                </p>
+
+            </div>
+
+            <div class="admin-profile">
+
+                <div class="avatar">
+                    K
+                </div>
+
+                <div class="profile-info">
+                    <strong>Ken</strong>
+                    <span>ADMIN</span>
+                </div>
+
+            </div>
+
+        </header>
+
+        <section class="content">
+
+            <!-- ================= STATS ================= -->
+
+            <div class="stats">
+
+                <div class="card stat-card">
+
+                    <div class="stat-title">
+                        TOTAL LOGS
+                    </div>
+
+                    <div class="stat-value">
+                        {{ stats.total }}
+                    </div>
+
+                    <div class="stat-info">
+                        All recorded activities
+                    </div>
+
+                </div>
+
+                <div class="card stat-card">
+
+                    <div class="stat-title">
+                        INFO
+                    </div>
+
+                    <div class="stat-value">
+                        {{ stats.info }}
+                    </div>
+
+                    <div class="stat-info">
+                        Normal activity
+                    </div>
+
+                </div>
+
+                <div class="card stat-card">
+
+                    <div class="stat-title">
+                        WARNINGS
+                    </div>
+
+                    <div class="stat-value">
+                        {{ stats.warning }}
+                    </div>
+
+                    <div class="stat-info">
+                        Needs attention
+                    </div>
+
+                </div>
+
+                <div class="card stat-card">
+
+                    <div class="stat-title">
+                        ERRORS
+                    </div>
+
+                    <div class="stat-value">
+                        {{ stats.error + stats.critical }}
+                    </div>
+
+                    <div class="stat-info">
+                        Error + critical events
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- ================= FILTER ================= -->
+
+            <div class="card filter-card">
+
+                <div class="section-title">
+                    Log Filters
+                </div>
+
+                <form method="GET" action="/admin/logs">
+
+                    <div class="filters">
+
+                        <div class="field">
+
+                            <label>
+                                SEARCH
+                            </label>
+
+                            <input
+                                type="text"
+                                name="search"
+                                value="{{ search }}"
+                                placeholder="Search action, module or description..."
+                            >
+
+                        </div>
+
+                        <div class="field">
+
+                            <label>
+                                SEVERITY
+                            </label>
+
+                            <select name="severity">
+
+                                <option value="">
+                                    All Severities
+                                </option>
+
+                                <option
+                                    value="info"
+                                    {% if severity == "info" %}selected{% endif %}
+                                >
+                                    Info
+                                </option>
+
+                                <option
+                                    value="warning"
+                                    {% if severity == "warning" %}selected{% endif %}
+                                >
+                                    Warning
+                                </option>
+
+                                <option
+                                    value="error"
+                                    {% if severity == "error" %}selected{% endif %}
+                                >
+                                    Error
+                                </option>
+
+                                <option
+                                    value="critical"
+                                    {% if severity == "critical" %}selected{% endif %}
+                                >
+                                    Critical
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="field">
+
+                            <label>
+                                MODULE
+                            </label>
+
+                            <select name="module">
+
+                                <option value="">
+                                    All Modules
+                                </option>
+
+                                {% for item in modules %}
+
+                                <option
+                                    value="{{ item.module }}"
+                                    {% if module == item.module %}selected{% endif %}
+                                >
+                                    {{ item.module }}
+                                </option>
+
+                                {% endfor %}
+
+                            </select>
+
+                        </div>
+
+                        <button class="btn" type="submit">
+                            Apply
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+            <!-- ================= LOGS ================= -->
+
+            <div class="card">
+
+                <div class="section-title">
+                    System Activity
+                </div>
+
+                <div class="table-wrap">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>TIME</th>
+                                <th>USER</th>
+                                <th>ACTION</th>
+                                <th>MODULE</th>
+                                <th>DESCRIPTION</th>
+                                <th>IP ADDRESS</th>
+                                <th>SEVERITY</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                        {% for log in logs %}
+
+                            <tr>
+
+                                <td class="muted">
+                                    {{ log.created_at }}
+                                </td>
+
+                                <td>
+
+                                    {% if log.full_name %}
+                                        {{ log.full_name }}
+
+                                    {% elif log.username %}
+                                        {{ log.username }}
+
+                                    {% elif log.user_id %}
+                                        User #{{ log.user_id }}
+
+                                    {% else %}
+                                        System
+                                    {% endif %}
+
+                                </td>
+
+                                <td>
+                                    {{ log.action }}
+                                </td>
+
+                                <td>
+                                    {{ log.module or "-" }}
+                                </td>
+
+                                <td class="description">
+                                    {{ log.description or "-" }}
+                                </td>
+
+                                <td class="muted">
+                                    {{ log.ip_address or "-" }}
+                                </td>
+
+                                <td>
+
+                                    <span class="badge {{ log.severity or 'info' }}">
+                                        {{ log.severity or 'info' }}
+                                    </span>
+
+                                </td>
+
+                            </tr>
+
+                        {% else %}
+
+                            <tr>
+
+                                <td colspan="7">
+
+                                    <div class="empty">
+
+                                        <div class="empty-icon">
+                                            📋
+                                        </div>
+
+                                        <div>
+                                            No activity logs found.
+                                        </div>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                        {% endfor %}
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+                <!-- ================= PAGINATION ================= -->
+
+                <div class="pagination">
+
+                    <div>
+                        Showing {{ logs|length }} logs
+                    </div>
+
+                    <div>
+
+                        {% if page > 1 %}
+
+                        <a
+                            href="?page={{ page - 1 }}&severity={{ severity }}&module={{ module }}&search={{ search }}"
+                        >
+                            ← Previous
+                        </a>
+
+                        {% endif %}
+
+                        {% if has_next %}
+
+                        <a
+                            href="?page={{ page + 1 }}&severity={{ severity }}&module={{ module }}&search={{ search }}"
+                        >
+                            Next →
+                        </a>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+</html>

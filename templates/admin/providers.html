@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Soul AI — AI Providers</title>
+
+    <style>
+
+        /* =========================================================
+           RESET + BODY
+        ========================================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Inter, Arial, sans-serif;
+            background: #10151c;
+            color: #f4f7fb;
+            min-height: 100vh;
+        }
+
+
+        /* =========================================================
+           MASTER DASHBOARD LAYOUT
+        ========================================================= */
+
+        .admin-layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+
+        /* =========================================================
+           SIDEBAR — DASHBOARD MASTER
+        ========================================================= */
+
+        .sidebar {
+            width: 250px;
+            background: #151c25;
+            border-right: 1px solid #27313d;
+            padding: 22px 15px;
+
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            padding: 5px 10px 28px;
+        }
+
+        .brand-icon {
+            width: 38px;
+            height: 38px;
+
+            border-radius: 11px;
+            background: #1683ff;
+
+            display: grid;
+            place-items: center;
+
+            font-size: 20px;
+        }
+
+        .brand h2 {
+            font-size: 18px;
+        }
+
+        .brand span {
+            color: #7e8b9a;
+            font-size: 11px;
+        }
+
+        .nav-title {
+            color: #657282;
+            font-size: 11px;
+
+            text-transform: uppercase;
+            letter-spacing: 1px;
+
+            padding: 0 10px 10px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+
+            padding: 12px 13px;
+            margin-bottom: 5px;
+
+            border-radius: 10px;
+
+            color: #aeb9c6;
+            cursor: pointer;
+
+            transition: .2s;
+
+            text-decoration: none;
+        }
+
+        .nav-item:hover {
+            background: #202a36;
+            color: #fff;
+        }
+
+        .nav-item.active {
+            background: #1683ff;
+            color: white;
+        }
+
+        .nav-icon {
+            width: 20px;
+            text-align: center;
+        }
+
+        .sidebar-bottom {
+            margin-top: auto;
+        }
+
+
+        /* =========================================================
+           MAIN
+        ========================================================= */
+
+        .main {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .topbar {
+            height: 72px;
+
+            border-bottom: 1px solid #27313d;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 0 30px;
+
+            background: #121820;
+        }
+
+        .page-title h1 {
+            font-size: 21px;
+        }
+
+        .page-title p {
+            color: #7e8b9a;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        .admin-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .avatar {
+            width: 38px;
+            height: 38px;
+
+            border-radius: 50%;
+            background: #1683ff;
+
+            display: grid;
+            place-items: center;
+
+            font-weight: bold;
+        }
+
+        .profile-info strong {
+            display: block;
+            font-size: 13px;
+        }
+
+        .profile-info span {
+            color: #1683ff;
+            font-size: 11px;
+        }
+
+
+        /* =========================================================
+           CONTENT
+        ========================================================= */
+
+        .content {
+            padding: 30px;
+        }
+
+        .heading {
+            display: flex;
+
+            justify-content: space-between;
+            align-items: flex-end;
+
+            margin-bottom: 24px;
+        }
+
+        .heading h2 {
+            font-size: 26px;
+            margin-bottom: 6px;
+        }
+
+        .heading p {
+            color: #8491a0;
+            font-size: 13px;
+        }
+
+        .add-btn {
+            border: 0;
+
+            background: #1683ff;
+            color: white;
+
+            padding: 11px 17px;
+
+            border-radius: 9px;
+
+            cursor: pointer;
+
+            font-weight: 600;
+
+            transition: .2s;
+        }
+
+        .add-btn:hover {
+            background: #0f75e6;
+        }
+
+
+        /* =========================================================
+           PROVIDER GRID
+        ========================================================= */
+
+        .provider-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(300px, 1fr));
+
+            gap: 18px;
+        }
+
+        .provider-card {
+            background: #171f29;
+
+            border: 1px solid #27313d;
+            border-radius: 15px;
+
+            padding: 20px;
+
+            transition: .2s;
+        }
+
+        .provider-card:hover {
+            border-color: #3b4c60;
+            transform: translateY(-2px);
+        }
+
+        .provider-top {
+            display: flex;
+
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .provider-icon {
+            width: 48px;
+            height: 48px;
+
+            border-radius: 13px;
+
+            background: #202a35;
+
+            display: grid;
+            place-items: center;
+
+            font-size: 22px;
+        }
+
+        .provider-name {
+            margin-top: 15px;
+        }
+
+        .provider-name h3 {
+            font-size: 17px;
+        }
+
+        .provider-name p {
+            color: #687687;
+
+            font-size: 11px;
+
+            margin-top: 4px;
+        }
+
+
+        /* =========================================================
+           STATUS
+        ========================================================= */
+
+        .status {
+            padding: 5px 9px;
+
+            border-radius: 20px;
+
+            font-size: 10px;
+
+            font-weight: 600;
+        }
+
+        .status.on {
+            background: #173529;
+            color: #4ed783;
+        }
+
+        .status.off {
+            background: #3b2226;
+            color: #e56d78;
+        }
+
+
+        /* =========================================================
+           DESCRIPTION
+        ========================================================= */
+
+        .description {
+            color: #8995a3;
+
+            font-size: 12px;
+
+            line-height: 1.6;
+
+            margin: 14px 0;
+
+            min-height: 38px;
+        }
+
+
+        /* =========================================================
+           STATS
+        ========================================================= */
+
+        .stats {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            border-top: 1px solid #27313d;
+            border-bottom: 1px solid #27313d;
+
+            padding: 13px 0;
+
+            margin-bottom: 14px;
+        }
+
+        .stat {
+            text-align: center;
+
+            border-right: 1px solid #27313d;
+        }
+
+        .stat:last-child {
+            border-right: 0;
+        }
+
+        .stat strong {
+            display: block;
+
+            font-size: 16px;
+        }
+
+        .stat span {
+            color: #687687;
+
+            font-size: 9px;
+
+            text-transform: uppercase;
+        }
+
+
+        /* =========================================================
+           PROVIDER ACTIONS
+        ========================================================= */
+
+        .provider-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            flex: 1;
+
+            border: 1px solid #303b48;
+
+            background: #202a35;
+
+            color: #cbd4df;
+
+            padding: 9px;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            font-size: 11px;
+
+            transition: .2s;
+        }
+
+        .action-btn:hover {
+            border-color: #1683ff;
+            color: white;
+        }
+
+        .action-btn.danger:hover {
+            border-color: #e56d78;
+            color: #e56d78;
+        }
+
+
+        /* =========================================================
+           EMPTY
+        ========================================================= */
+
+        .empty {
+            text-align: center;
+
+            padding: 80px 20px;
+
+            color: #687687;
+
+            grid-column: 1 / -1;
+        }
+
+
+        /* =========================================================
+           MODAL
+        ========================================================= */
+
+        .modal {
+            position: fixed;
+
+            inset: 0;
+
+            background: rgba(0, 0, 0, .65);
+
+            display: none;
+
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            z-index: 1000;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-box {
+            width: 100%;
+
+            max-width: 480px;
+
+            background: #171f29;
+
+            border: 1px solid #303b48;
+
+            border-radius: 15px;
+
+            padding: 24px;
+        }
+
+        .modal-box h2 {
+            font-size: 20px;
+
+            margin-bottom: 5px;
+        }
+
+        .modal-box > p {
+            color: #687687;
+
+            font-size: 12px;
+
+            margin-bottom: 20px;
+        }
+
+        .field {
+            margin-bottom: 13px;
+        }
+
+        .field label {
+            display: block;
+
+            color: #9aa6b4;
+
+            font-size: 11px;
+
+            margin-bottom: 6px;
+        }
+
+        .field input,
+        .field textarea {
+            width: 100%;
+
+            background: #10151c;
+
+            border: 1px solid #303b48;
+
+            border-radius: 8px;
+
+            padding: 11px;
+
+            color: white;
+
+            outline: none;
+
+            font-family: inherit;
+        }
+
+        .field input:focus,
+        .field textarea:focus {
+            border-color: #1683ff;
+        }
+
+        .field textarea {
+            resize: vertical;
+
+            min-height: 70px;
+        }
+
+        .modal-actions {
+            display: flex;
+
+            gap: 9px;
+
+            margin-top: 18px;
+        }
+
+        .modal-actions button {
+            flex: 1;
+
+            padding: 11px;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            border: 1px solid #303b48;
+
+            background: #202a35;
+
+            color: #cbd4df;
+        }
+
+        .modal-actions button:hover {
+            border-color: #1683ff;
+            color: white;
+        }
+
+        .modal-actions .save {
+            background: #1683ff;
+
+            border-color: #1683ff;
+
+            color: white;
+        }
+
+        .modal-actions .save:hover {
+            background: #0f75e6;
+        }
+
+
+        /* =========================================================
+           MOBILE — SAME DASHBOARD BREAKPOINT
+        ========================================================= */
+
+        @media (max-width: 950px) {
+
+            .sidebar {
+                width: 210px;
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .admin-layout {
+                display: block;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .topbar {
+                padding: 0 17px;
+            }
+
+            .content {
+                padding: 20px 15px;
+            }
+
+            .profile-info {
+                display: none;
+            }
+
+            .heading {
+                display: block;
+            }
+
+            .add-btn {
+                margin-top: 15px;
+            }
+
+            .provider-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="admin-layout">
+
+
+    <!-- =========================================================
+         SIDEBAR — DASHBOARD MASTER
+    ========================================================== -->
+
+    <aside class="sidebar">
+
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                💫
+            </div>
+
+            <div>
+
+                <h2>Soul AI</h2>
+
+                <span>
+                    ADMIN CENTER
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div class="nav-title">
+            Control
+        </div>
+
+
+        <a
+            class="nav-item"
+            href="/admin/"
+        >
+
+            <div class="nav-icon">
+                🏠
+            </div>
+
+            Dashboard
+
+        </a>
+
+
+        <a
+            class="nav-item"
+            href="/admin/users"
+        >
+
+            <div class="nav-icon">
+                👥
+            </div>
+
+            Users
+
+        </a>
+
+
+        <a
+            class="nav-item active"
+            href="/admin/providers"
+        >
+
+            <div class="nav-icon">
+                🤖
+            </div>
+
+            AI Providers
+
+        </a>
+
+
+        <a
+            class="nav-item"
+            href="/admin/models"
+        >
+
+            <div class="nav-icon">
+                🧠
+            </div>
+
+            AI Models
+
+        </a>
+
+
+        <a
+            class="nav-item"
+            href="/admin/api-keys"
+        >
+
+            <div class="nav-icon">
+                🔑
+            </div>
+
+            API Keys
+
+        </a>
+
+
+        <a
+            class="nav-item"
+            href="/admin/routing"
+        >
+
+            <div class="nav-icon">
+                🚦
+            </div>
+
+            Routing
+
+        </a>
+
+
+        <div
+            class="nav-title"
+            style="margin-top:20px;"
+        >
+            Monitor
+        </div>
+
+
+        <a
+            class="nav-item"
+            href="/admin/health"
+        >
+
+            <div class="nav-icon">
+                ❤️
+            </div>
+
+            Health
+
+        </a>
+
+
+        <a
+            class="nav-item"
+            href="/admin/analytics"
+        >
+
+            <div class="nav-icon">
+                📊
+            </div>
+
+            Analytics
+
+        </a>
+
+
+        <a
+            class="nav-item"
+            href="/admin/logs"
+        >
+
+            <div class="nav-icon">
+                📜
+            </div>
+
+            Activity Logs
+
+        </a>
+
+
+        <div class="sidebar-bottom">
+
+            <a
+                class="nav-item"
+                href="/admin/settings"
+            >
+
+                <div class="nav-icon">
+                    ⚙️
+                </div>
+
+                Settings
+
+            </a>
+
+        </div>
+
+
+    </aside>
+
+
+    <!-- =========================================================
+         MAIN
+    ========================================================== -->
+
+    <main class="main">
+
+
+        <!-- TOPBAR -->
+
+        <header class="topbar">
+
+
+            <div class="page-title">
+
+                <h1>
+                    AI Providers
+                </h1>
+
+                <p>
+                    Manage AI providers connected to Soul AI
+                </p>
+
+            </div>
+
+
+            <div class="admin-profile">
+
+                <div class="avatar">
+                    K
+                </div>
+
+                <div class="profile-info">
+
+                    <strong>
+                        Ken
+                    </strong>
+
+                    <span>
+                        ADMIN
+                    </span>
+
+                </div>
+
+            </div>
+
+
+        </header>
+
+
+        <!-- CONTENT -->
+
+        <section class="content">
+
+
+            <div class="heading">
+
+
+                <div>
+
+                    <h2>
+                        Providers
+                    </h2>
+
+                    <p>
+                        Control AI platforms and their availability.
+                    </p>
+
+                </div>
+
+
+                <button
+                    class="add-btn"
+                    onclick="openModal()"
+                >
+                    + Add Provider
+                </button>
+
+
+            </div>
+
+
+            <!-- PROVIDERS -->
+
+            <div class="provider-grid">
+
+
+                {% if providers %}
+
+
+                    {% for provider in providers %}
+
+
+                    <div class="provider-card">
+
+
+                        <div class="provider-top">
+
+
+                            <div class="provider-icon">
+
+
+                                {% if "gemini" in provider.provider_slug %}
+
+                                    ✨
+
+                                {% elif "openai" in provider.provider_slug %}
+
+                                    🧠
+
+                                {% elif "anthropic" in provider.provider_slug %}
+
+                                    🤖
+
+                                {% elif "xai" in provider.provider_slug %}
+
+                                    𝕏
+
+                                {% elif "deepseek" in provider.provider_slug %}
+
+                                    🔵
+
+                                {% else %}
+
+                                    ⚡
+
+                                {% endif %}
+
+
+                            </div>
+
+
+                            {% if provider.is_active %}
+
+                                <span class="status on">
+                                    ● ACTIVE
+                                </span>
+
+                            {% else %}
+
+                                <span class="status off">
+                                    ● DISABLED
+                                </span>
+
+                            {% endif %}
+
+
+                        </div>
+
+
+                        <div class="provider-name">
+
+
+                            <h3>
+                                {{ provider.provider_name }}
+                            </h3>
+
+
+                            <p>
+                                {{ provider.provider_slug }}
+                            </p>
+
+
+                        </div>
+
+
+                        <div class="description">
+
+                            {{ provider.description
+                               or
+                               "No description available."
+                            }}
+
+                        </div>
+
+
+                        <div class="stats">
+
+
+                            <div class="stat">
+
+                                <strong>
+                                    {{ provider.model_count }}
+                                </strong>
+
+                                <span>
+                                    Models
+                                </span>
+
+                            </div>
+
+
+                            <div class="stat">
+
+                                <strong>
+                                    {{ provider.key_count }}
+                                </strong>
+
+                                <span>
+                                    Keys
+                                </span>
+
+                            </div>
+
+
+                            <div class="stat">
+
+                                <strong>
+                                    {{ provider.healthy_keys }}
+                                </strong>
+
+                                <span>
+                                    Healthy
+                                </span>
+
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="provider-actions">
+
+
+                            <button
+                                class="action-btn"
+                                onclick="toggleProvider({{ provider.id }})"
+                            >
+
+                                {% if provider.is_active %}
+
+                                    Disable
+
+                                {% else %}
+
+                                    Enable
+
+                                {% endif %}
+
+                            </button>
+
+
+                            <button
+                                class="action-btn danger"
+                                onclick="deleteProvider({{ provider.id }})"
+                            >
+                                Remove
+                            </button>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                    {% endfor %}
+
+
+                {% else %}
+
+
+                    <div class="empty">
+
+
+                        <div style="font-size:45px;">
+                            🤖
+                        </div>
+
+
+                        <br>
+
+
+                        <h3>
+                            No AI Providers
+                        </h3>
+
+
+                        <p style="margin-top:8px;">
+                            Add your first AI provider to Soul AI.
+                        </p>
+
+
+                    </div>
+
+
+                {% endif %}
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
+
+<!-- =============================================================
+     ADD PROVIDER MODAL
+============================================================= -->
+
+<div
+    class="modal"
+    id="providerModal"
+>
+
+
+    <div class="modal-box">
+
+
+        <h2>
+            Add AI Provider
+        </h2>
+
+
+        <p>
+            Connect a new AI platform to Soul AI.
+        </p>
+
+
+        <div class="field">
+
+            <label>
+                Provider Name *
+            </label>
+
+            <input
+                id="providerName"
+                placeholder="Google Gemini"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                Provider Slug *
+            </label>
+
+            <input
+                id="providerSlug"
+                placeholder="google-gemini"
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                Website
+            </label>
+
+            <input
+                id="providerWebsite"
+                placeholder="https://..."
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                API Base URL
+            </label>
+
+            <input
+                id="providerBaseUrl"
+                placeholder="https://api..."
+            >
+
+        </div>
+
+
+        <div class="field">
+
+            <label>
+                Description
+            </label>
+
+            <textarea
+                id="providerDescription"
+                placeholder="Provider description..."
+            ></textarea>
+
+        </div>
+
+
+        <div class="modal-actions">
+
+
+            <button
+                onclick="closeModal()"
+            >
+                Cancel
+            </button>
+
+
+            <button
+                class="save"
+                onclick="addProvider()"
+            >
+                Add Provider
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<script>
+
+
+// ==========================================================
+// MODAL
+// ==========================================================
+
+function openModal() {
+
+    document
+        .getElementById("providerModal")
+        .classList.add("show");
+
+}
+
+
+function closeModal() {
+
+    document
+        .getElementById("providerModal")
+        .classList.remove("show");
+
+}
+
+
+// Close modal when clicking outside
+
+document
+    .getElementById("providerModal")
+    .addEventListener("click", function(event) {
+
+        if (event.target === this) {
+            closeModal();
+        }
+
+    });
+
+
+// ==========================================================
+// ADD PROVIDER
+// ==========================================================
+
+async function addProvider() {
+
+
+    const providerName =
+        document
+            .getElementById("providerName")
+            .value
+            .trim();
+
+
+    const providerSlug =
+        document
+            .getElementById("providerSlug")
+            .value
+            .trim();
+
+
+    const website =
+        document
+            .getElementById("providerWebsite")
+            .value
+            .trim();
+
+
+    const baseUrl =
+        document
+            .getElementById("providerBaseUrl")
+            .value
+            .trim();
+
+
+    const description =
+        document
+            .getElementById("providerDescription")
+            .value
+            .trim();
+
+
+    if (!providerName || !providerSlug) {
+
+        alert(
+            "Provider name and slug are required."
+        );
+
+        return;
+    }
+
+
+    try {
+
+
+        const response = await fetch(
+            "/admin/providers/add",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+
+                    provider_name: providerName,
+
+                    provider_slug: providerSlug,
+
+                    website: website,
+
+                    api_base_url: baseUrl,
+
+                    description: description
+
+                })
+            }
+        );
+
+
+        const data =
+            await response.json();
+
+
+        if (!data.success) {
+
+            alert(
+                data.message ||
+                "Unable to add provider."
+            );
+
+            return;
+        }
+
+
+        location.reload();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Server error. Please try again."
+        );
+
+    }
+
+}
+
+
+// ==========================================================
+// TOGGLE PROVIDER
+// ==========================================================
+
+async function toggleProvider(providerId) {
+
+
+    try {
+
+
+        const response = await fetch(
+
+            `/admin/providers/${providerId}/toggle`,
+
+            {
+                method: "POST"
+            }
+
+        );
+
+
+        const data =
+            await response.json();
+
+
+        if (!data.success) {
+
+            alert(
+                data.message ||
+                "Unable to change provider."
+            );
+
+            return;
+        }
+
+
+        location.reload();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Server error."
+        );
+
+    }
+
+}
+
+
+// ==========================================================
+// DELETE PROVIDER
+// ==========================================================
+
+async function deleteProvider(providerId) {
+
+
+    const confirmed =
+        confirm(
+            "Remove this AI provider?\n\n" +
+            "Providers with models or API keys " +
+            "cannot be removed."
+        );
+
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    try {
+
+
+        const response = await fetch(
+
+            `/admin/providers/${providerId}/delete`,
+
+            {
+                method: "POST"
+            }
+
+        );
+
+
+        const data =
+            await response.json();
+
+
+        if (!data.success) {
+
+            alert(
+                data.message ||
+                "Unable to remove provider."
+            );
+
+            return;
+        }
+
+
+        location.reload();
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Server error."
+        );
+
+    }
+
+}
+
+</script>
+
+
+</body>
+</html>

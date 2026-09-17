@@ -1,0 +1,1638 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Soul AI — API Keys</title>
+
+<style>
+
+/* ==========================================================
+   RESET + BODY
+========================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Inter,Arial,sans-serif;
+    background:#10151c;
+    color:#f4f7fb;
+    min-height:100vh;
+}
+
+
+/* ==========================================================
+   MASTER ADMIN LAYOUT
+========================================================== */
+
+.admin-layout{
+    display:flex;
+    min-height:100vh;
+}
+
+
+/* ==========================================================
+   MASTER SIDEBAR
+========================================================== */
+
+.sidebar{
+    width:250px;
+    background:#151c25;
+    border-right:1px solid #27313d;
+    padding:22px 15px;
+    display:flex;
+    flex-direction:column;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:5px 10px 28px;
+}
+
+.brand-icon{
+    width:38px;
+    height:38px;
+    border-radius:11px;
+    background:#1683ff;
+    display:grid;
+    place-items:center;
+    font-size:20px;
+}
+
+.brand h2{
+    font-size:18px;
+}
+
+.brand span{
+    color:#7e8b9a;
+    font-size:11px;
+}
+
+.nav-title{
+    color:#657282;
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    padding:0 10px 10px;
+}
+
+.nav-item{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:12px 13px;
+    margin-bottom:5px;
+    border-radius:10px;
+    color:#aeb9c6;
+    cursor:pointer;
+    transition:.2s;
+    text-decoration:none;
+}
+
+.nav-item:hover{
+    background:#202a36;
+    color:#fff;
+}
+
+.nav-item.active{
+    background:#1683ff;
+    color:white;
+}
+
+.nav-icon{
+    width:20px;
+    text-align:center;
+}
+
+.sidebar-bottom{
+    margin-top:auto;
+}
+
+
+/* ==========================================================
+   MASTER MAIN
+========================================================== */
+
+.main{
+    flex:1;
+    min-width:0;
+}
+
+.topbar{
+    height:72px;
+    border-bottom:1px solid #27313d;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 30px;
+    background:#121820;
+}
+
+.page-title h1{
+    font-size:21px;
+}
+
+.page-title p{
+    color:#7e8b9a;
+    font-size:13px;
+    margin-top:4px;
+}
+
+.admin-profile{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.avatar{
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    background:#1683ff;
+    display:grid;
+    place-items:center;
+    font-weight:bold;
+}
+
+.profile-info strong{
+    display:block;
+    font-size:13px;
+}
+
+.profile-info span{
+    color:#1683ff;
+    font-size:11px;
+}
+
+
+/* ==========================================================
+   CONTENT
+========================================================== */
+
+.content{
+    padding:30px;
+}
+
+.heading{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    margin-bottom:24px;
+}
+
+.heading h2{
+    font-size:26px;
+    margin-bottom:6px;
+}
+
+.heading p{
+    color:#8491a0;
+    font-size:13px;
+}
+
+.add-btn{
+    border:0;
+    background:#1683ff;
+    color:white;
+    padding:11px 17px;
+    border-radius:9px;
+    cursor:pointer;
+    font-weight:600;
+    transition:.2s;
+}
+
+.add-btn:hover{
+    background:#0f75e8;
+}
+
+
+/* ==========================================================
+   KEY GRID
+========================================================== */
+
+.key-grid{
+    display:grid;
+    grid-template-columns:
+        repeat(auto-fit,minmax(330px,1fr));
+    gap:18px;
+}
+
+.key-card{
+    background:#171f29;
+    border:1px solid #27313d;
+    border-radius:14px;
+    padding:20px;
+    transition:.2s;
+}
+
+.key-card:hover{
+    border-color:#3b4c60;
+    transform:translateY(-2px);
+}
+
+.key-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+}
+
+.key-icon{
+    width:48px;
+    height:48px;
+    border-radius:13px;
+    background:#202a35;
+    display:grid;
+    place-items:center;
+    font-size:22px;
+}
+
+
+/* ==========================================================
+   STATUS
+========================================================== */
+
+.status{
+    padding:5px 9px;
+    border-radius:20px;
+    font-size:10px;
+    font-weight:600;
+}
+
+.status.active{
+    background:#173529;
+    color:#4ed783;
+}
+
+.status.disabled{
+    background:#3b2226;
+    color:#e56d78;
+}
+
+.status.invalid{
+    background:#3b2d19;
+    color:#e7ad54;
+}
+
+.status.rate{
+    background:#30243a;
+    color:#c18cff;
+}
+
+
+/* ==========================================================
+   KEY INFO
+========================================================== */
+
+.key-name{
+    margin-top:15px;
+}
+
+.key-name h3{
+    font-size:17px;
+}
+
+.key-name p{
+    color:#687687;
+    font-size:11px;
+    margin-top:4px;
+}
+
+.key-value{
+    margin-top:14px;
+    background:#10151c;
+    border:1px solid #27313d;
+    border-radius:8px;
+    padding:10px;
+    font-family:monospace;
+    color:#aeb9c6;
+    font-size:12px;
+    overflow:hidden;
+}
+
+
+/* ==========================================================
+   KEY META
+========================================================== */
+
+.key-meta{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    border-top:1px solid #27313d;
+    border-bottom:1px solid #27313d;
+    padding:13px 0;
+    margin:15px 0;
+}
+
+.meta{
+    text-align:center;
+    border-right:1px solid #27313d;
+}
+
+.meta:last-child{
+    border-right:0;
+}
+
+.meta strong{
+    display:block;
+    font-size:15px;
+}
+
+.meta span{
+    color:#687687;
+    font-size:9px;
+    text-transform:uppercase;
+}
+
+
+/* ==========================================================
+   HEALTH
+========================================================== */
+
+.health{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size:11px;
+    margin-bottom:14px;
+}
+
+.health-label{
+    color:#687687;
+}
+
+.healthy{
+    color:#4ed783;
+}
+
+.slow{
+    color:#e7ad54;
+}
+
+.bad{
+    color:#e56d78;
+}
+
+
+/* ==========================================================
+   ACTIONS
+========================================================== */
+
+.key-actions{
+    display:flex;
+    gap:8px;
+}
+
+.action-btn{
+    flex:1;
+    border:1px solid #303b48;
+    background:#202a35;
+    color:#cbd4df;
+    padding:9px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:10px;
+    transition:.2s;
+}
+
+.action-btn:hover{
+    border-color:#1683ff;
+    color:white;
+}
+
+.action-btn.danger:hover{
+    border-color:#e56d78;
+    color:#e56d78;
+}
+
+
+/* ==========================================================
+   EMPTY
+========================================================== */
+
+.empty{
+    text-align:center;
+    padding:80px 20px;
+    color:#687687;
+    grid-column:1/-1;
+}
+
+
+/* ==========================================================
+   MODAL
+========================================================== */
+
+.modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.68);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:100;
+    overflow:auto;
+}
+
+.modal.show{
+    display:flex;
+}
+
+.modal-box{
+    width:100%;
+    max-width:500px;
+    max-height:90vh;
+    overflow-y:auto;
+    background:#171f29;
+    border:1px solid #303b48;
+    border-radius:15px;
+    padding:24px;
+}
+
+.modal-box h2{
+    font-size:20px;
+    margin-bottom:5px;
+}
+
+.modal-box>p{
+    color:#687687;
+    font-size:12px;
+    margin-bottom:20px;
+}
+
+.field{
+    margin-bottom:13px;
+}
+
+.field label{
+    display:block;
+    color:#9aa6b4;
+    font-size:11px;
+    margin-bottom:6px;
+}
+
+.field input,
+.field select{
+    width:100%;
+    background:#10151c;
+    border:1px solid #303b48;
+    border-radius:8px;
+    padding:11px;
+    color:white;
+    outline:none;
+    font-family:inherit;
+}
+
+.field input:focus,
+.field select:focus{
+    border-color:#1683ff;
+}
+
+.field small{
+    display:block;
+    color:#657282;
+    margin-top:5px;
+    font-size:10px;
+}
+
+.modal-actions{
+    display:flex;
+    gap:9px;
+    margin-top:18px;
+}
+
+.modal-actions button{
+    flex:1;
+    padding:11px;
+    border-radius:8px;
+    cursor:pointer;
+    border:1px solid #303b48;
+    background:#202a35;
+    color:#cbd4df;
+}
+
+.modal-actions .save{
+    background:#1683ff;
+    border-color:#1683ff;
+    color:white;
+}
+
+
+/* ==========================================================
+   RESPONSIVE — SAME AS DASHBOARD
+========================================================== */
+
+@media(max-width:950px){
+
+    .sidebar{
+        width:210px;
+    }
+
+    .key-grid{
+        grid-template-columns:
+            repeat(2,minmax(0,1fr));
+    }
+
+}
+
+@media(max-width:650px){
+
+    .admin-layout{
+        display:block;
+    }
+
+    .sidebar{
+        display:none;
+    }
+
+    .topbar{
+        padding:0 17px;
+    }
+
+    .content{
+        padding:20px 15px;
+    }
+
+    .profile-info{
+        display:none;
+    }
+
+    .heading{
+        display:block;
+    }
+
+    .heading h2{
+        font-size:22px;
+    }
+
+    .add-btn{
+        margin-top:15px;
+    }
+
+    .key-grid{
+        grid-template-columns:1fr;
+    }
+
+    .modal{
+        padding:12px;
+    }
+
+    .modal-box{
+        padding:20px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="admin-layout">
+
+
+<!-- ==========================================================
+     MASTER SIDEBAR
+========================================================== -->
+
+<aside class="sidebar">
+
+    <div class="brand">
+
+        <div class="brand-icon">
+            💫
+        </div>
+
+        <div>
+
+            <h2>
+                Soul AI
+            </h2>
+
+            <span>
+                ADMIN CENTER
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="nav-title">
+        Control
+    </div>
+
+
+    <a class="nav-item"
+       href="/admin/">
+
+        <div class="nav-icon">
+            🏠
+        </div>
+
+        Dashboard
+
+    </a>
+
+
+    <a class="nav-item"
+       href="/admin/users">
+
+        <div class="nav-icon">
+            👥
+        </div>
+
+        Users
+
+    </a>
+
+
+    <a class="nav-item"
+       href="/admin/providers">
+
+        <div class="nav-icon">
+            🤖
+        </div>
+
+        AI Providers
+
+    </a>
+
+
+    <a class="nav-item"
+       href="/admin/models">
+
+        <div class="nav-icon">
+            🧠
+        </div>
+
+        AI Models
+
+    </a>
+
+
+    <a class="nav-item active"
+       href="/admin/api-keys">
+
+        <div class="nav-icon">
+            🔑
+        </div>
+
+        API Keys
+
+    </a>
+
+
+    <a class="nav-item"
+       href="/admin/routing">
+
+        <div class="nav-icon">
+            🚦
+        </div>
+
+        Routing
+
+    </a>
+
+
+    <div class="nav-title"
+         style="margin-top:20px;">
+
+        Monitor
+
+    </div>
+
+
+    <a class="nav-item"
+       href="/admin/health">
+
+        <div class="nav-icon">
+            ❤️
+        </div>
+
+        Health
+
+    </a>
+
+
+    <a class="nav-item"
+       href="/admin/analytics">
+
+        <div class="nav-icon">
+            📊
+        </div>
+
+        Analytics
+
+    </a>
+
+
+    <a class="nav-item"
+       href="/admin/logs">
+
+        <div class="nav-icon">
+            📜
+        </div>
+
+        Activity Logs
+
+    </a>
+
+
+    <div class="sidebar-bottom">
+
+        <a class="nav-item"
+           href="/admin/settings">
+
+            <div class="nav-icon">
+                ⚙️
+            </div>
+
+            Settings
+
+        </a>
+
+    </div>
+
+</aside>
+
+
+<!-- ==========================================================
+     MAIN
+========================================================== -->
+
+<main class="main">
+
+
+<header class="topbar">
+
+    <div class="page-title">
+
+        <h1>
+            API Keys
+        </h1>
+
+        <p>
+            Manage secure API credentials connected to Soul AI
+        </p>
+
+    </div>
+
+
+    <div class="admin-profile">
+
+        <div class="avatar">
+            K
+        </div>
+
+        <div class="profile-info">
+
+            <strong>
+                Ken
+            </strong>
+
+            <span>
+                ADMIN
+            </span>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<section class="content">
+
+
+<div class="heading">
+
+    <div>
+
+        <h2>
+            API Keys
+        </h2>
+
+        <p>
+            Control credentials, usage and key health.
+        </p>
+
+    </div>
+
+
+    <button
+        class="add-btn"
+        onclick="openModal()">
+
+        + Add API Key
+
+    </button>
+
+</div>
+
+
+<!-- ==========================================================
+     KEY GRID
+========================================================== -->
+
+<div class="key-grid">
+
+
+{% if api_keys %}
+
+
+{% for key in api_keys %}
+
+
+<div class="key-card">
+
+
+<div class="key-top">
+
+
+    <div class="key-icon">
+        🔑
+    </div>
+
+
+    {% if key.status == "active" %}
+
+        <span class="status active">
+            ● ACTIVE
+        </span>
+
+    {% elif key.status == "disabled" %}
+
+        <span class="status disabled">
+            ● DISABLED
+        </span>
+
+    {% elif key.status == "invalid" %}
+
+        <span class="status invalid">
+            ● INVALID
+        </span>
+
+    {% elif key.status == "rate_limited" %}
+
+        <span class="status rate">
+            ● RATE LIMITED
+        </span>
+
+    {% else %}
+
+        <span class="status disabled">
+            ● {{ key.status|upper }}
+        </span>
+
+    {% endif %}
+
+
+</div>
+
+
+<div class="key-name">
+
+    <h3>
+        {{ key.key_name or "Unnamed Key" }}
+    </h3>
+
+    <p>
+
+        {{ key.provider_name }}
+
+        {% if key.model_name %}
+
+            • {{ key.model_name }}
+
+        {% endif %}
+
+    </p>
+
+</div>
+
+
+<div class="key-value">
+
+    {{ key.masked_key }}
+
+</div>
+
+
+<div class="key-meta">
+
+
+    <div class="meta">
+
+        <strong>
+            {{ key.priority or 1 }}
+        </strong>
+
+        <span>
+            Priority
+        </span>
+
+    </div>
+
+
+    <div class="meta">
+
+        <strong>
+
+            {{ key.used_today or 0 }}
+
+            {% if key.daily_limit and key.daily_limit > 0 %}
+
+                / {{ key.daily_limit }}
+
+            {% endif %}
+
+        </strong>
+
+        <span>
+            Today
+        </span>
+
+    </div>
+
+
+    <div class="meta">
+
+        <strong>
+            {{ key.total_requests or 0 }}
+        </strong>
+
+        <span>
+            Requests
+        </span>
+
+    </div>
+
+
+</div>
+
+
+<div class="health">
+
+
+    <span class="health-label">
+        Health
+    </span>
+
+
+    {% if key.health_status == "healthy" %}
+
+        <span class="healthy">
+            ● Healthy
+        </span>
+
+    {% elif key.health_status == "slow" %}
+
+        <span class="slow">
+            ● Slow
+        </span>
+
+    {% elif key.health_status == "rate_limited" %}
+
+        <span class="slow">
+            ● Rate Limited
+        </span>
+
+    {% elif key.health_status == "invalid" %}
+
+        <span class="bad">
+            ● Invalid
+        </span>
+
+    {% else %}
+
+        <span class="bad">
+            ● {{ key.health_status|replace("_"," ")|title }}
+        </span>
+
+    {% endif %}
+
+
+</div>
+
+
+<div class="key-actions">
+
+
+<button
+    class="action-btn"
+    onclick="toggleKey({{ key.id }})">
+
+    {% if key.status == "active" %}
+
+        Disable
+
+    {% else %}
+
+        Enable
+
+    {% endif %}
+
+</button>
+
+
+<button
+    class="action-btn danger"
+    onclick="deleteKey({{ key.id }})">
+
+    Remove
+
+</button>
+
+
+</div>
+
+
+</div>
+
+
+{% endfor %}
+
+
+{% else %}
+
+
+<div class="empty">
+
+    <div style="font-size:45px;">
+        🔑
+    </div>
+
+    <br>
+
+    <h3>
+        No API Keys
+    </h3>
+
+    <p style="margin-top:8px;">
+
+        Add your first API key to connect an AI provider.
+
+    </p>
+
+</div>
+
+
+{% endif %}
+
+
+</div>
+
+
+</section>
+
+
+</main>
+
+</div>
+
+
+<!-- ==========================================================
+     ADD API KEY MODAL
+========================================================== -->
+
+<div
+    class="modal"
+    id="keyModal">
+
+
+<div class="modal-box">
+
+
+<h2>
+    Add API Key
+</h2>
+
+<p>
+    Store a secure API credential for an AI provider.
+</p>
+
+
+<div class="field">
+
+<label>
+    Provider *
+</label>
+
+<select id="providerId">
+
+    <option value="">
+        Select Provider
+    </option>
+
+    {% for provider in providers %}
+
+        <option value="{{ provider.id }}">
+            {{ provider.provider_name }}
+        </option>
+
+    {% endfor %}
+
+</select>
+
+</div>
+
+
+<div class="field">
+
+<label>
+    Model
+</label>
+
+<select id="modelId">
+
+    <option value="">
+        Optional — All Models
+    </option>
+
+    {% for model in models %}
+
+        <option
+            value="{{ model.id }}"
+            data-provider="{{ model.provider_id }}">
+
+            {{ model.model_name }}
+
+        </option>
+
+    {% endfor %}
+
+</select>
+
+</div>
+
+
+<div class="field">
+
+<label>
+    Key Name
+</label>
+
+<input
+    id="keyName"
+    placeholder="Gemini Primary Key">
+
+</div>
+
+
+<div class="field">
+
+<label>
+    API Key *
+</label>
+
+<input
+    id="apiKey"
+    type="password"
+    placeholder="Paste API key here"
+    autocomplete="off">
+
+<small>
+    The key will never be displayed in plain text.
+</small>
+
+</div>
+
+
+<div class="field">
+
+<label>
+    Priority
+</label>
+
+<input
+    id="priority"
+    type="number"
+    min="1"
+    value="1">
+
+</div>
+
+
+<div class="field">
+
+<label>
+    Daily Limit
+</label>
+
+<input
+    id="dailyLimit"
+    type="number"
+    min="0"
+    value="0">
+
+<small>
+    0 = unlimited
+</small>
+
+</div>
+
+
+<div class="field">
+
+<label>
+    Expiry
+</label>
+
+<input
+    id="expiresAt"
+    type="datetime-local">
+
+</div>
+
+
+<div class="modal-actions">
+
+<button onclick="closeModal()">
+
+    Cancel
+
+</button>
+
+
+<button
+    class="save"
+    onclick="addApiKey()">
+
+    Add API Key
+
+</button>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<script>
+
+/* ==========================================================
+   MODAL
+========================================================== */
+
+function openModal(){
+
+    document
+        .getElementById("keyModal")
+        .classList.add("show");
+
+}
+
+
+function closeModal(){
+
+    document
+        .getElementById("keyModal")
+        .classList.remove("show");
+
+}
+
+
+/* ==========================================================
+   CLOSE MODAL OUTSIDE CLICK
+========================================================== */
+
+document
+    .getElementById("keyModal")
+    .addEventListener(
+        "click",
+        function(event){
+
+            if(event.target === this){
+
+                closeModal();
+
+            }
+
+        }
+    );
+
+
+/* ==========================================================
+   ESC KEY
+========================================================== */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Escape"){
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+/* ==========================================================
+   PROVIDER → MODEL FILTER
+========================================================== */
+
+document
+    .getElementById("providerId")
+    .addEventListener(
+        "change",
+        function(){
+
+            const providerId =
+                this.value;
+
+            const modelSelect =
+                document.getElementById(
+                    "modelId"
+                );
+
+            const options =
+                modelSelect.querySelectorAll(
+                    "option"
+                );
+
+            modelSelect.value = "";
+
+
+            options.forEach(option => {
+
+                if(!option.value){
+
+                    option.style.display = "";
+
+                    return;
+
+                }
+
+
+                option.style.display =
+                    option.dataset.provider === providerId
+                        ? ""
+                        : "none";
+
+            });
+
+        }
+    );
+
+
+/* ==========================================================
+   ADD API KEY
+========================================================== */
+
+async function addApiKey(){
+
+    const providerId =
+        document
+            .getElementById("providerId")
+            .value;
+
+    const modelId =
+        document
+            .getElementById("modelId")
+            .value;
+
+    const keyName =
+        document
+            .getElementById("keyName")
+            .value
+            .trim();
+
+    const apiKey =
+        document
+            .getElementById("apiKey")
+            .value
+            .trim();
+
+    const priority =
+        document
+            .getElementById("priority")
+            .value;
+
+    const dailyLimit =
+        document
+            .getElementById("dailyLimit")
+            .value;
+
+    const expiresAt =
+        document
+            .getElementById("expiresAt")
+            .value;
+
+
+    if(!providerId || !apiKey){
+
+        alert(
+            "Provider and API key are required."
+        );
+
+        return;
+
+    }
+
+
+    try{
+
+        const response =
+            await fetch(
+                "/admin/api-keys/add",
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:JSON.stringify({
+
+                        provider_id:
+                            providerId,
+
+                        model_id:
+                            modelId || null,
+
+                        key_name:
+                            keyName,
+
+                        api_key:
+                            apiKey,
+
+                        priority:
+                            Number(priority) || 1,
+
+                        daily_limit:
+                            Number(dailyLimit) || 0,
+
+                        expires_at:
+                            expiresAt || null
+
+                    })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(!data.success){
+
+            alert(
+                data.message ||
+                "Unable to add API key."
+            );
+
+            return;
+
+        }
+
+
+        location.reload();
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        alert(
+            "Server error. Please try again."
+        );
+
+    }
+
+}
+
+
+/* ==========================================================
+   TOGGLE KEY
+========================================================== */
+
+async function toggleKey(keyId){
+
+    try{
+
+        const response =
+            await fetch(
+                `/admin/api-keys/${keyId}/toggle`,
+                {
+                    method:"POST"
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(!data.success){
+
+            alert(
+                data.message ||
+                "Unable to change API key."
+            );
+
+            return;
+
+        }
+
+
+        location.reload();
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        alert("Server error.");
+
+    }
+
+}
+
+
+/* ==========================================================
+   DELETE KEY
+========================================================== */
+
+async function deleteKey(keyId){
+
+    const confirmed =
+        confirm(
+            "Remove this API key?\n\n" +
+            "This action cannot be undone."
+        );
+
+
+    if(!confirmed){
+
+        return;
+
+    }
+
+
+    try{
+
+        const response =
+            await fetch(
+                `/admin/api-keys/${keyId}/delete`,
+                {
+                    method:"POST"
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if(!data.success){
+
+            alert(
+                data.message ||
+                "Unable to remove API key."
+            );
+
+            return;
+
+        }
+
+
+        location.reload();
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        alert("Server error.");
+
+    }
+
+}
+
+</script>
+
+
+</body>
+
+</html>
