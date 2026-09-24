@@ -665,13 +665,9 @@ function renderHistory() {
                         "beforeend",
 
                         `
-                        <div class="user fade-in">
-
-                            <p>
-                                ${msg.text}
-                            </p>
-
-                        </div>
+                        <p class="history-user-message">
+                            ${msg.text}
+                        </p>
                         `
 
                     );
