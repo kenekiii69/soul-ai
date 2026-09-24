@@ -1,3 +1,7 @@
 Flask
-google-generativeai
 gunicorn
+mysql-connector-python
+python-dotenv
+requests
+google-genai
+bcrypt

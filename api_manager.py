@@ -8,6 +8,7 @@
 import json
 import time
 import threading
+import os 
 from typing import Any, Dict, Generator, Optional
 
 import mysql.connector
@@ -20,11 +21,18 @@ from google import genai
 # ==========================================================
 
 DB_CONFIG = {
-    "host": "localhost",
-    "user": "root",
-    "password": "",
-    "database": "soul_ai",
+    "host": os.getenv("DB_HOST", "localhost"),
+    "port": int(os.getenv("DB_PORT", "3306")),
+    "user": os.getenv("DB_USER", "root"),
+    "password": os.getenv("DB_PASSWORD", ""),
+    "database": os.getenv("DB_NAME", "soul_ai")
 }
+
+if os.getenv("DB_SSL_MODE", "").upper() == "REQUIRED":
+    DB_CONFIG["ssl_disabled"] = False
+
+    if os.getenv("DB_SSL_CA"):
+        DB_CONFIG["ssl_ca"] = os.getenv("DB_SSL_CA")
 
 HEALTH_CHECK_INTERVAL = 300
 REQUEST_TIMEOUT = 60
@@ -2059,21 +2067,6 @@ def start_health_monitor():
         thread.start()
         _health_monitor_started = True
         return thread
-
-
-# ==========================================================
-# Initial Setup
-# ==========================================================
-
-# IMPORTANT:
-# Do not raise an exception when Gemini keys are absent.
-# Soul AI is now multi-provider and can work with any
-# healthy provider in the database.
-
-try:
-    start_health_monitor()
-except Exception as e:
-    print(f"⚠️ Health monitor startup error: {e}")
 
 
 # ==========================================================

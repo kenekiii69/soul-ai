@@ -1,13 +1,25 @@
+import os
 import mysql.connector
+
+# Database configuration
+DB_CONFIG = {
+    "host": os.getenv("DB_HOST", "localhost"),
+    "port": int(os.getenv("DB_PORT", "3306")),
+    "user": os.getenv("DB_USER", "root"),
+    "password": os.getenv("DB_PASSWORD", ""),
+    "database": os.getenv("DB_NAME", "soul_ai")
+}
+
+# Aiven / production SSL
+if os.getenv("DB_SSL_MODE", "").upper() == "REQUIRED":
+    DB_CONFIG["ssl_disabled"] = False
+
+    if os.getenv("DB_SSL_CA"):
+        DB_CONFIG["ssl_ca"] = os.getenv("DB_SSL_CA")
 
 try:
 
-    db = mysql.connector.connect(
-        host="localhost",
-        user="root",
-        password="",
-        database="soul_ai"
-    )
+    db = mysql.connector.connect(**DB_CONFIG)
 
     # Buffered cursor
     cursor = db.cursor(
